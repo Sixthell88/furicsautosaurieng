@@ -1,0 +1,40 @@
+def tool_main(logfun):
+    global running
+    logfun("🚀....")
+    while running:
+        order = detect_arrow_order()
+        if order:
+            logfun(f"🔍 Detected: {' '.join(order)}")
+            auto_press_arrows(order, logfun)
+            logfun(f"⏱️ settings {SPACE_DELAY} SPACE...")
+            for _ in range(int(SPACE_DELAY * 10)):
+                if not running: return
+                time.sleep(0.1)
+            keyboard.press_and_release("space")
+            logfun("⏱️ Pressed: SPACE")
+            countdown = 8.5
+            logfun(f"⏱️ settings {countdown} ...")
+            for _ in range(int(countdown * 10)):
+                if not running: return
+                time.sleep(0.1)
+            keyboard.press('alt')
+            logfun("⏱️ settings")
+            time.sleep(0.15)
+            pyautogui.click()
+            logfun("🖱️ Click")
+            time.sleep(0.1)
+            x, y = pyautogui.position()
+            pyautogui.mouseDown(button='left')
+            pyautogui.moveTo(x + 0, y, duration=0.12)
+            pyautogui.mouseUp(button='left')
+            logfun("↗1px")
+            time.sleep(0.1)
+            pyautogui.click()
+            logfun("🖱️ Click")
+            keyboard.release('alt')
+            logfun("🔄 restart..")
+            continue
+        else:
+            time.sleep(0.1)
+    logfun("⛔....")
+tool_main(logfun)
