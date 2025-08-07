@@ -1,5 +1,5 @@
 def tool_main(logfun):
-    global running
+    global running, MODE_AUTO
     logfun("🚀....")
     while running:
         order = detect_arrow_order()
@@ -12,7 +12,11 @@ def tool_main(logfun):
                 time.sleep(0.1)
             keyboard.press_and_release("space")
             logfun("⏱️ Pressed: SPACE")
-            countdown = 8.5
+            # TÙY MODE: SẦU RIÊNG/MẬT ONG => countdown khác nhau
+            if MODE_AUTO == "matong":
+                countdown = 10.5
+            else:
+                countdown = 8.5
             logfun(f"⏱️ settings {countdown} ...")
             for _ in range(int(countdown * 10)):
                 if not running: return
